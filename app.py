@@ -51,10 +51,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def generate_summary(self):
         self.setMovie()
         self.gif.start()
-        if self.summarization == 'sports' and self.sportsType == 'youtube link':
+        if self.summarization == 'sports':
+            if self.sportsType == 'youtube link':
             # youtube download
-            url = self.urlTextBox.text()
-            self.thread = ThreadClass(url = url, do_download = True)
+                url = self.urlTextBox.text()
+                self.thread = ThreadClass(url = url, do_download = True)
+            else:
+                self.thread = ThreadClass(isMovie='sports', filePath=self.filePath, fileName=self.fileName)
             self.thread.start()
             self.thread.update.connect(self.output)
         else:
@@ -112,7 +115,7 @@ class ThreadClass(QtCore.QThread):
 
     def run(self):
         # first download youtube video then generate sports highlights
-        if self.isMovie != 'movie':
+        if self.isMovie == 'sports':
             try:
             # if download is true download the video
                 if self.do_download:
