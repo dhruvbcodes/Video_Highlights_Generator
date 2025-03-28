@@ -52,19 +52,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setMovie()
         self.gif.start()
         if self.summarization == 'sports':
+            print("RUNNING FOR SPORTS")
             if self.sportsType == 'youtube link':
             # youtube download
                 url = self.urlTextBox.text()
                 self.thread = ThreadClass(url = url, do_download = True)
             else:
-                self.thread = ThreadClass(isMovie='sports', filePath=self.filePath, fileName=self.fileName)
+                self.thread = ThreadClass(isMovie=self.summarization, filePath=self.filePath, fileName=self.fileName)
             self.thread.start()
             self.thread.update.connect(self.output)
-        else:
-            # movie and sports 
+        elif self.summarization == 'movie':
+            # movie 
+            print("RUNNING FOR MOVIE")
             self.thread = ThreadClass(isMovie = self.summarization, filePath = self.filePath, fileName= self.fileName)
             self.thread.start()
             self.thread.update.connect(self.output)
+        else:
+            print("SELECT SOMETHING VALID")
 
     def resetAll(self):
         self.summarization = None
@@ -118,9 +122,9 @@ class ThreadClass(QtCore.QThread):
         if self.isMovie == 'sports':
             try:
             # if download is true download the video
-                if self.do_download:
-                    yt = youtube(self.url)
-                    self.filePath, self.fileName= yt.download()
+                # if self.do_download:
+                #     #yt = youtube(self.url)
+                #     self.filePath, self.fileName= yt.download()
                 obj = highlight_generation(self.filePath, self.fileName)
                 status = obj.generate()
                 self.update.emit(status,False,None)

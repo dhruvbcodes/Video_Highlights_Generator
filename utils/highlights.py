@@ -1,7 +1,8 @@
 #from moviepy.video.io.VideoFileClip import VideoFileClip
 #from moviepy.video.io.VideoFileClip import concatenate_videoclips
-from moviepy import * 
-from moviepy import VideoFileClip
+# from moviepy import * 
+# from moviepy import VideoFileClip
+from moviepy.editor import VideoFileClip, concatenate_videoclips
 import librosa
 import numpy as np
 import pandas as pd
@@ -85,7 +86,7 @@ class highlight_generation():
             else:
                 start_lim = start[i] 
             end_lim = end[i]   
-            clips.append(self.original_video.subclipped(start_lim, end_lim))
+            clips.append(self.original_video.subclip(start_lim, end_lim))
             
         new_video = concatenate_videoclips(clips)
 

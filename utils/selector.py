@@ -3,8 +3,9 @@ import numpy as np
 from typing import List, Optional
 #from moviepy.video.io.VideoFileClip import VideoFileClip
 #from moviepy import concatenate_videoclips
-from moviepy import *  
-from moviepy import VideoFileClip
+from moviepy.editor import VideoFileClip, concatenate_videoclips
+# from moviepy import *  
+# from moviepy import VideoFileClip
 from pytube import __main__
 
 from .feature import Feature
